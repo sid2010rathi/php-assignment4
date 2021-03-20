@@ -6,9 +6,9 @@
 
 // Set the database access information as constants:
 define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'root');
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'account');
+define('DB_NAME', 'siddharthrathi_message_board');
 
 // Make the connection:
 $mysqli = new MySQLi(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
