@@ -8,17 +8,17 @@
             $this->price = $price;
         }
 
-        function set_name($name) {
+        function setName($name) {
             $this->name = $name;
         }
-        function get_name() {
+        function getName() {
             return $this->name;
         }
 
-        function set_price($price) {
+        function setPrice($price) {
             $this->price = $price;
         }
-        function get_price() {
+        function getPrice() {
             return $this->price;
         }
     }
