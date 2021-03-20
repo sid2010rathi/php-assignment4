@@ -19,12 +19,12 @@
             foreach($products as $name => $price) {
                 echo "<input type='radio' id='${name}' name='item' value='${name}' onclick='getItemName(event);'>
                 <label for='${name}'>${name}</label>";
-                echo "&nbsp; &nbsp;<label id=price_${name} value=${price}>Price: ${price}</label><br>";
+                echo "&nbsp; &nbsp;<label id=price_${name} value=${price}>Price: $${price}</label><br>";
             }
         ?>
         <form>
             <label for="amout">Amount:</label>
-            <input type="number" name="amount" id="amount" readonly><br>
+            <input type="number" name="amount" id="amount" value="0" readonly><br>
             <button name="submit" id="submit">Submit</button>
         </form>
         <button name="1dollar" id="1dollar" value="1">$1.00</button>
@@ -34,24 +34,94 @@
     </body>
     <script>
         var price;
+        var item;
+
+        function $(element) {
+            return document.getElementById(element);
+        }
+        
         function getItemName(event) {
-            var item = event.target.value;
-            price = document.getElementById("price_"+item).innerHTML.split("Price: ")[1];
+            item = event.target.value;
+            price = $("price_"+item).innerHTML.split("Price: $")[1];
+            alert("You Select "+item+". You have to pay $"+price);
         }
 
-        document.getElementById("submit").addEventListener("click", function(event){
-            event.preventDefault()
+        $("submit").addEventListener("click", function(event){
+            event.preventDefault();
+            var amount = $("amount").value;
+            if(item) {
+                if(amount) {
+                    if(amount == price) {
+                        alert("That is everything. Enjoy.");
+                        document.getElementById("amount").value = 0;
+                    }
+                    if(amount < price) {
+                        var remainder = price - amount;
+                        alert("You have to pay more $"+remainder+" to get this item.");
+                    } else if(amount > price) {
+                        var remainder = amount - price;
+                        if(remainder == 0) {
+                            alert("That is everything. Enjoy.");
+                        } else {
+                            alert("You paid more $"+remainder+". Please collect your change. Enjoy.");
+                        }
+                        document.getElementById("amount").value = 0;
+                    }
+                } else {
+                    alert("Please enter amount by pressing currency buttons");
+                }
+            } else {
+                alert("Please select product first");
+            }
         });
 
         window.onclick = showAmount;
         function showAmount(event) {
-            var pressedValue;
-            if(event.target.value) {
-                pressedValue =  event.target.value;
-                console.log(pressedValue);
-                switch(pressedValue) {
-                    case "1":
-                        
+            var buttonValue = event.target.value;
+            if(buttonValue) {
+                if(item) {
+                    var amoutArea = $("amount");
+                    var pressedValue;
+                    if(event.target.value) {
+                        pressedValue =  event.target.value;
+                        value = parseFloat(pressedValue);
+                        switch(value) {
+                            case 1.00:
+                                if(amoutArea.value) {
+                                    amout = parseFloat(amoutArea.value) + value;
+                                    amoutArea.value = amout.toFixed(2);
+                                } else {
+                                    amoutArea.value = value;
+                                }
+                                break;
+                            case 0.25:
+                                if(amoutArea.value) {
+                                    amout = parseFloat(amoutArea.value) + value;
+                                    amoutArea.value = amout.toFixed(2);
+                                } else {
+                                    amoutArea.value = value;
+                                }
+                                break;
+                            case 0.10:
+                                if(amoutArea.value) {
+                                    amout = parseFloat(amoutArea.value) + value;
+                                    amoutArea.value = amout.toFixed(2);
+                                } else {
+                                    amoutArea.value = value;
+                                }
+                                break;
+                            case 0.05:
+                                if(amoutArea.value) {
+                                    amout = parseFloat(amoutArea.value) + value;
+                                    amoutArea.value = amout.toFixed(2);
+                                } else {
+                                    amoutArea.value = value;
+                                }
+                                break;
+                        }
+                    }
+                } else {
+                    alert("Please select product first");
                 }
             }
         }
