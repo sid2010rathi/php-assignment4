@@ -24,7 +24,7 @@
         ?>
         <form>
             <label for="amout">Amount:</label>
-            <input type="number" name="amount" id="amount" value="0" readonly><br>
+            <input type="number" name="amount" id="amount" value="0" readonly /><br>
             <button name="submit" id="submit">Submit</button>
         </form>
         <button name="1dollar" id="1dollar" value="1">$1.00</button>
@@ -57,13 +57,13 @@
                     }
                     if(amount < price) {
                         var remainder = price - amount;
-                        alert("You have to pay more $"+remainder+" to get this item.");
+                        alert("You have to pay more $"+remainder.toFixed(2)+" to get this item.");
                     } else if(amount > price) {
                         var remainder = amount - price;
                         if(remainder == 0) {
                             alert("That is everything. Enjoy.");
                         } else {
-                            alert("You paid more $"+remainder+". Please collect your change. Enjoy.");
+                            alert("You paid more $"+remainder.toFixed(2)+". Please collect your change. Enjoy.");
                         }
                         document.getElementById("amount").value = 0;
                     }
@@ -78,7 +78,7 @@
         window.onclick = showAmount;
         function showAmount(event) {
             var buttonValue = event.target.value;
-            if(buttonValue) {
+            if(buttonValue === "1" || buttonValue === "0.25" || buttonValue === "0.10" || buttonValue === "0.05") {
                 if(item) {
                     var amoutArea = $("amount");
                     var pressedValue;
