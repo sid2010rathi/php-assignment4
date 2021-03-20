@@ -22,15 +22,21 @@
                 echo "&nbsp; &nbsp;<label id=price_${name} value=${price}>Price: $${price}</label><br>";
             }
         ?>
-        <form>
-            <label for="amout">Amount:</label>
-            <input type="number" name="amount" id="amount" value="0" readonly /><br>
-            <button name="submit" id="submit">Submit</button>
-        </form>
-        <button name="1dollar" id="1dollar" value="1">$1.00</button>
-        <button name="25cents" id="25cents" value="0.25">$0.25</button>
-        <button name="10cents" id="10cents" value="0.10">$0.10</button>
-        <button name="5cents" id="5cents" value="0.05">$0.05</button>
+        <div>
+            <p>Display Amount:</p>
+            <form>
+                <label for="amout">Amount:</label>
+                <input type="number" name="amount" id="amount" value="0" readonly /><br>
+                <button name="submit" id="submit">Submit</button>
+            </form>
+        </div>
+        <div>
+            <p>Pay from here:</p>
+            <button name="1dollar" id="1dollar" value="1">$1.00</button>
+            <button name="25cents" id="25cents" value="0.25">$0.25</button>
+            <button name="10cents" id="10cents" value="0.10">$0.10</button>
+            <button name="5cents" id="5cents" value="0.05">$0.05</button>
+        </div>
     </body>
     <script>
         var price;
