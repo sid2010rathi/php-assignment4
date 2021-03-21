@@ -9,12 +9,18 @@
             $statement -> bind_param("ss", $username, $message);
             $statement -> execute();
             if($statement) {
-                echo "Success";
+                $data = "Success";
+                header('Content-Type: application/json');
+                echo json_encode($data);
             } else {
-                echo "Failure";
+                $data = "Failure";
+                header('Content-Type: application/json');
+                echo json_encode($data);
             }
         } else {
-            echo "All Fields are mandatory";
+            $data = "All Fields mandatory";
+            header('Content-Type: application/json');
+            echo json_encode($data);
         }
     }
 ?>

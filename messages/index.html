@@ -1,23 +1,93 @@
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
- <body>
- <div id="display">
- </div>
- <p><input id="message" type="text" name="message"></p>
- <p><input id="username" type="text" name="username"></p>
- <p>
- <button type="button" onclick="postdata(evet)">Submit Message</button>
- </p>
- </body>
-<script>  
-function getmessage() {
+    <body>
+        <div id="display">
+            <h3>Messages</h3>
+            <p id="alert" hidden></p>
+            <table id="messages" border="3">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <p>Message: <input id="message" type="text" name="message"></p>
+        <p>Username:<input id="username" type="text" name="username"></p>
+        <p>
+            <button type="button" onclick="postdata(event)">Submit Message</button>
+        </p>
+    </body>
+<script>
+    function getmessage() {
 
-}
+        fetch("messages.php")
+        .then((resp) => resp.json())
+        .then(function(data) {
+            if(data) {
+                $("#display #messages").removeAttr("hidden");
+                $("#display #alert").attr("hidden", true);
+                var messageBody = "";
+                for(var i=0; i<data.length; i++){
+                    var id = data[i].id;
+                    var username = data[i].username;
+                    var message = data[i].message;
 
-function postdata(event) {
-    event.preventDefault();
-}
-getmessage();
- </script>
- </html>
+                    messageBody += "<tr><td>" + id + "</td>" +
+                        "<td>" + username + "</td>" +
+                        "<td>" + message + "</td>" +
+                        "</tr>";
+                }
+                $("#display #messages tbody").html("");
+                $("#display #messages tbody").append(messageBody);
+            } else {
+                $("#display #messages").attr("hidden", true);
+                $("#display #alert").removeAttr("hidden");
+                $("#display #alert").append("There is no Messages. Please add some.");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    }
+
+    function postdata(event) {
+
+        event.preventDefault();
+        var fd = new FormData();
+        fd.append("message", $('#message').val());
+        fd.append("username", $('#username').val());
+        $.ajax({
+            type: "POST",
+            url: "input.php",
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            data: fd,
+            success: function(data) {
+                if(data == "Success") {
+                    alert("Hoorrayy!! Message Added");
+                } else {
+                    alert(data);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("Something went wrong!! Try again.");
+                console.error(error);
+            }
+        });
+
+    }
+    $(function() {
+        setInterval(function(){
+            getmessage()
+        }, 1000);
+    });
+</script>
+</html>
